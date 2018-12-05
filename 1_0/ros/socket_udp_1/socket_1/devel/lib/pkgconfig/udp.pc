@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/demo/2_0/ros/socket_1/devel
+
+Name: udp
+Description: Description of udp
+Version: 0.0.0
+Cflags: -I/home/tbf/projects/demo/2_0/ros/socket_1/src/udp/include -I/home/tbf/projects/demo/2_0/ros/socket_1/src/udp/protobuf
+Libs: -L/home/tbf/projects/demo/2_0/ros/socket_1/devel/lib 
+Requires: 

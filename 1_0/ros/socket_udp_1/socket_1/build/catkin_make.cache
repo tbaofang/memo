@@ -1,0 +1,2 @@
+udp
+-DCATKIN_DEVEL_PREFIX=/home/tbf/projects/demo/2_0/ros/socket_1/devel -DCMAKE_INSTALL_PREFIX=/home/tbf/projects/demo/2_0/ros/socket_1/install -G Unix Makefiles
