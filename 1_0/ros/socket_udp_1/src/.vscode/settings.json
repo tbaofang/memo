@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "*.ipp": "cpp",
+        "thread": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "mutex": "cpp",
+        "*.tcc": "cpp",
+        "typeindex": "cpp",
+        "typeinfo": "cpp",
+        "exception": "cpp"
+    }
+}
