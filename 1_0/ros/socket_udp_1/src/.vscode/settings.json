@@ -15,6 +15,7 @@
         "*.tcc": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "exception": "cpp"
+        "exception": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -47,6 +47,8 @@ class Server
 
     bool dataRecv();
     bool dataParse();
+    bool dataSent(int sockdf);
+
     bool string2Scan();
     bool string2Map();
     bool string2Path();
@@ -61,6 +63,7 @@ class Server
 
     boost::thread *data_recv_thread_;
     boost::thread *data_parse_thread_;
+    boost::thread *data_collect_thread_;
 
     string buff_scan_;
     boost::mutex buff_scan_mtx_;
@@ -82,6 +85,7 @@ Server::Server()
 
     data_recv_thread_ = NULL;
     data_parse_thread_ = NULL;
+    data_collect_thread_ = NULL;
 }
 
 void Server::init()
@@ -108,11 +112,15 @@ Server::~Server()
         data_recv_thread_->join();
         delete data_recv_thread_;
     }
-
     if (data_parse_thread_)
     {
         data_parse_thread_->join();
         delete data_parse_thread_;
+    }
+    if (data_collect_thread_)
+    {
+        data_collect_thread_->join();
+        delete data_collect_thread_;
     }
 
     if (proto_Lidar_)
@@ -138,16 +146,18 @@ bool Server::dataRecv()
     srvAddr.sin_port = htons(atoi(server_port_.c_str()));
     int srvAddrLen = sizeof(srvAddr);
 
-    int iSock = socket(AF_INET, SOCK_DGRAM, 0); // udp
-    int iRet = bind(iSock, (struct sockaddr *)&srvAddr, sizeof(srvAddr));
+    int sockdf = socket(AF_INET, SOCK_DGRAM, 0); // udp
+    int iRet = bind(sockdf, (struct sockaddr *)&srvAddr, sizeof(srvAddr));
+
+    data_collect_thread_ = new boost::thread([&] { dataSent(sockdf); });
 
     struct sockaddr_in cliAddr;
     bzero(&cliAddr, sizeof(cliAddr));
     cliAddr.sin_family = AF_INET;
     int cliAddrLen = sizeof(cliAddr);
+
     char szBuf[recv_size_ + 1] = {0};
     int n = 0;
-
     string buffer;
     char header[7] = "$START";
     size_t head_n = 0;
@@ -155,7 +165,7 @@ bool Server::dataRecv()
     {
 
         bzero(&szBuf, sizeof(szBuf));
-        n = recvfrom(iSock, szBuf, recv_size_, 0, (struct sockaddr *)&cliAddr, (socklen_t *)&cliAddrLen);
+        // n = recvfrom(sockdf, szBuf, recv_size_, 0, (struct sockaddr *)&cliAddr, (socklen_t *)&cliAddrLen);
         if (n == -1)
             perror("recvfrom error");
         //        cout << "recv_size=" << n << endl;
@@ -221,8 +231,52 @@ bool Server::dataRecv()
         }
     }
 
-    close(iSock);
+    close(sockdf);
     return 0;
+
+
+}
+
+bool Server::dataSent(int sockdf)
+{
+    struct sockaddr_in targetAddr;
+    bzero(&targetAddr, sizeof(targetAddr));
+    targetAddr.sin_family = AF_INET;
+    targetAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    targetAddr.sin_port = htons(8002);
+    int targetAddrLen = sizeof(targetAddr);
+
+    int n = 0;
+    int send_size;
+    string buf = "hello i am full duplex";
+    while (ros::ok())
+    {
+        send_size = std::min(static_cast<int>(buf.size()), 100);
+        n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *)&targetAddr, sizeof(targetAddr));
+        cout << "send_size = " << n << endl;
+
+        // if (cdc_->data_collection_.size() > 0)
+        // {
+        //     cdc_->data_collection_mtx_.lock();
+        //     buf.assign(cdc_->data_collection_);
+        //     cdc_->data_collection_.clear();
+        //     cdc_->data_collection_mtx_.unlock();
+        //     while (!buf.empty())
+        //     {
+        //         send_size = std::min(static_cast<int>(buf.size()), send_size_);
+        //         n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *)&srvAddr, sizeof(srvAddr));
+        //         if (n == -1)
+        //             perror("sendto error");
+        //         //                cout << "send size: " <<  n << endl;
+        //         buf.erase(0, n);
+        //     }
+        // }
+    }
+
+    close(sockdf);
+
+
+    
 }
 
 bool Server::dataParse()
@@ -476,7 +530,7 @@ bool Server::string2Path()
         ps.pose.position.y = proto_path_->poses(i).y();
         ps.pose.position.z = proto_path_->poses(i).z();
         tf::Quaternion quat;
-        quat.setRPY(proto_path_->poses(i).roll(),proto_path_->poses(i).pitch(),proto_path_->poses(i).yaw());
+        quat.setRPY(proto_path_->poses(i).roll(), proto_path_->poses(i).pitch(), proto_path_->poses(i).yaw());
         ps.pose.orientation.x = quat.x();
         ps.pose.orientation.y = quat.y();
         ps.pose.orientation.z = quat.z();
@@ -487,13 +541,6 @@ bool Server::string2Path()
 
     // ros::Time time(t.proto_path_.poses(i).publish_stamp());
     //     ps.header.stamp = time;
-
-
-
-
-
-
-
 
     //     ps.header.frame_id = t.proto_path_.poses(i).frame_id();
     //     ps.pose.position.x = t.proto_path_.poses(i).x();

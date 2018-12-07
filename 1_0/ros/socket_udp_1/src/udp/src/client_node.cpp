@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "client_node");
-    Client cli("8001");
+    Client cli;
 
     cli.startClient();
 
