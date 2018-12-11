@@ -1,0 +1,3 @@
+<launch>
+    <node name="server_node" pkg="communication" type="server_node" output="screen" />
+</launch>
