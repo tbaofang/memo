@@ -146,41 +146,5 @@ void ClientUdpRecv::runThread() {
             }
 
         }
-
-
-
-
-//        if (!strncmp(reinterpret_cast<const char *>(&buff), reinterpret_cast<const char *>(&header), 6)) {
-//            if (++head_n > 1) {
-//                size_t name_len = stoi(buffer.substr(6, 2));
-//                size_t total_len = stoi(buffer.substr(8, 8));
-//                string name_str = buffer.substr(16, name_len);
-//
-//                if (buffer.size() != total_len)
-//                {
-//                    buffer.clear();
-//                    cout << "package loss or out of order!!!!!!!!!";
-//
-//                }
-//                if(ds_->client_data_parse_.size() < 2000000) {
-//                    ds_->client_data_parse_mtx_.lock();
-//                    ds_->client_data_parse_.append(buffer);
-//                    ds_->client_data_parse_mtx_.unlock();
-//                }
-//
-//                cout << endl << "================" << endl;
-//                cout << "recv_n = " << head_n << endl;
-//                cout << buffer.substr(0, 6) << endl;
-//                cout << "head_len = " << name_len << endl;
-//                cout << "name = " << name_str << endl;
-//                cout << "total_len = " << total_len << endl;
-//                cout << buffer.substr(total_len - 4, 4) << endl;
-//                cout << "client_data_package_ size = " << ds_->client_data_package_.size() << endl;
-//                cout << "==================" << endl << endl;
-//            }
-//            buffer.assign(buff, n);
-//        } else {
-//            buffer.append(buff, n);
-//        }
     }
 }

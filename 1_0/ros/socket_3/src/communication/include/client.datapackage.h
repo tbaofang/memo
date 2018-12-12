@@ -7,13 +7,15 @@
 #include <sensor_msgs/LaserScan.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <nav_msgs/Path.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <tf2_msgs/TFMessage.h>
 #include <tf/tf.h>
 
 #include "datashare.h"
 #include "proto_msgs.LaserScan.pb.h"
 #include "proto_msgs.OccupancyGrid.pb.h"
 #include "proto_msgs.Path.pb.h"
-
+#include "proto_msgs.TFMessage.pb.h"
 
 using namespace std;
 
@@ -23,15 +25,6 @@ public:
     ~ClientDataPackage();
     void start(DataShare* datashare);
 private:
-    boost::thread* data_package_thread_;
-    void runThread();
-
-    ros::NodeHandle nh_;
-
-    void lidarCallback(const sensor_msgs::LaserScan::ConstPtr &msg);
-    void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg);
-    void pathCallback(const nav_msgs::Path::ConstPtr &msg);
-
     struct SensorData
     {
         string start{"$START"};
@@ -44,6 +37,17 @@ private:
     };
 
     DataShare *ds_;
+
+    boost::thread* data_package_thread_;
+    void runThread();
+
+    ros::NodeHandle nh_;
+
+    void lidarCallback(const sensor_msgs::LaserScan::ConstPtr &msg);
+    void mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg);
+    void pathCallback(const nav_msgs::Path::ConstPtr &msg);
+    void TFCallback(const tf2_msgs::TFMessage::ConstPtr &msg);
+    void TFStaticCallback(const tf2_msgs::TFMessage::ConstPtr &msg);
 
     void pack(const string &name, const string &content);
 };
@@ -61,16 +65,16 @@ ClientDataPackage::~ClientDataPackage() {
 }
 
 void ClientDataPackage::start(DataShare *datashare){
-//    cout << "enter start" << endl;
     ds_ = datashare;
     data_package_thread_ = new boost::thread([&]{runThread();});
 }
 
 void ClientDataPackage::runThread(){
-//    cout << "enter run thread" << endl;
     ros::Subscriber lidar_sub = nh_.subscribe("/scan", 10, &ClientDataPackage::lidarCallback, this);
     ros::Subscriber map_sub = nh_.subscribe("/map", 1, &ClientDataPackage::mapCallback, this);
     ros::Subscriber path_sub = nh_.subscribe("/move_base/NavfnROS/plan", 10, &ClientDataPackage::pathCallback, this);
+//    ros::Subscriber tf_sub = nh_.subscribe("/tf", 10, &ClientDataPackage::TFCallback, this);
+//    ros::Subscriber tf_static_sub = nh_.subscribe("/tf_static",10,&ClientDataPackage::TFStaticCallback, this);
 
     ros::spin();
 }
@@ -99,7 +103,6 @@ void ClientDataPackage::pack(const string &name, const string &content) {
 }
 
 void ClientDataPackage::lidarCallback(const sensor_msgs::LaserScan::ConstPtr &scan) {
-//    cout << " enter lidar callback" << endl;
     if(ds_->client_control_command_.compare("start")) return;
     string name = "proto_msg.LaserScan";
     string content;
@@ -123,25 +126,6 @@ void ClientDataPackage::lidarCallback(const sensor_msgs::LaserScan::ConstPtr &sc
     proto_Lidar.Clear();
 
     pack(name, content);
-
-//    buff.total_len.resize(8);
-//    buff.name = name;
-//    buff.name_len = to_string(buff.name.size());
-//    buff.total_len = to_string(buff.start.size() + buff.name_len.size() + buff.total_len.size() + buff.name.size() + buff.content.size() + buff.terminator.size());
-//    buff.total_len.resize(8);
-//    buff.all = buff.start + buff.name_len + buff.total_len + buff.name + buff.content + buff.terminator;
-//
-//    ds_->client_data_package_mtx_.lock();
-//    ds_->client_data_package_.append(buff.all);
-//    ds_->client_data_package_mtx_.unlock();
-
-//    cout << endl << "------------------------" << endl;
-//    cout << buff.start << endl;
-//    cout << buff.name << endl;
-//    cout << buff.total_len << " " << buff.all.size() << endl;
-//    cout << buff.terminator << endl;
-//    cout << "client_data_package_ size : " << ds_->client_data_package_.size() << endl;
-//    cout << "------------------------" << endl << endl;
 }
 
 void ClientDataPackage::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg) {
@@ -180,5 +164,107 @@ void ClientDataPackage::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg
 }
 
 void ClientDataPackage::pathCallback(const nav_msgs::Path::ConstPtr &msg) {
+    if(ds_->client_control_command_.compare("start")) return;
+    string name = "proto_msg.Path";
+    string content;
+    proto_msg::Path proto;
 
+    proto.set_protocol_type(name);
+    proto.set_publish_stamp(msg->header.stamp.toSec());
+    proto.set_frame_id(msg->header.frame_id);
+    proto_msg::PathPoint* pp;
+    for (auto pose : msg->poses)
+    {
+        pp = proto.add_poses();
+        pp->set_publish_stamp(pose.header.stamp.toSec());
+        pp->set_frame_id(pose.header.frame_id);
+        pp->set_x(pose.pose.position.x);
+        pp->set_y(pose.pose.position.y);
+        pp->set_z(pose.pose.position.z);
+        double roll, pitch, yaw;
+        tf::Quaternion quat;
+        tf::quaternionMsgToTF(pose.pose.orientation, quat);
+        tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+        pp->set_roll(roll);
+        pp->set_pitch(pitch);
+        pp->set_yaw(yaw);
+    }
+
+    bool re = proto.SerializeToString(&content);
+    if (!re)
+    {
+        cout << "fail!!!!!" << endl;
+        return;
+    }
+    proto.Clear();
+
+    pack(name, content);
+}
+
+void ClientDataPackage::TFCallback(const tf2_msgs::TFMessage::ConstPtr &msg) {
+    if(ds_->client_control_command_.compare("start")) return;
+    string name = "proto_msg.TFMessage";
+    string content;
+    proto_msg::TFMessage proto;
+
+    proto.set_protocol_type(name);
+    proto_msg::TF *tf;
+    for(auto transform: msg->transforms){
+        tf = proto.add_tfs();
+        tf->set_publish_stamp(transform.header.stamp.toSec());
+        tf->set_frame_id(transform.header.frame_id);
+        tf->set_child_frame_id(transform.child_frame_id);
+        tf->set_x(transform.transform.translation.x);
+        tf->set_y(transform.transform.translation.y);
+        tf->set_z(transform.transform.translation.z);
+        double roll,pitch,yaw;
+        tf::Quaternion qua;
+        tf::quaternionMsgToTF(transform.transform.rotation,qua);
+        tf::Matrix3x3(qua).getRPY(roll,pitch,yaw);
+        tf->set_roll(roll);
+        tf->set_pitch(pitch);
+        tf->set_yaw(yaw);
+    }
+
+    if (!proto.SerializeToString(&content)) {
+        cout << "fail!!!!!" << endl;
+        return;
+    }
+    proto.Clear();
+
+    pack(name, content);
+}
+
+void ClientDataPackage::TFStaticCallback(const tf2_msgs::TFMessage::ConstPtr &msg) {
+    if(ds_->client_control_command_.compare("start")) return;
+    string name = "proto_msg.TFStaticMessage";
+    string content;
+    proto_msg::TFStaticMessage proto;
+
+    proto.set_protocol_type(name);
+    proto_msg::TF *tf;
+    for(auto transform: msg->transforms){
+        tf = proto.add_tfs();
+        tf->set_publish_stamp(transform.header.stamp.toSec());
+        tf->set_frame_id(transform.header.frame_id);
+        tf->set_child_frame_id(transform.child_frame_id);
+        tf->set_x(transform.transform.translation.x);
+        tf->set_y(transform.transform.translation.y);
+        tf->set_z(transform.transform.translation.z);
+        double roll,pitch,yaw;
+        tf::Quaternion qua;
+        tf::quaternionMsgToTF(transform.transform.rotation,qua);
+        tf::Matrix3x3(qua).getRPY(roll,pitch,yaw);
+        tf->set_roll(roll);
+        tf->set_pitch(pitch);
+        tf->set_yaw(yaw);
+    }
+
+    if (!proto.SerializeToString(&content)) {
+        cout << "fail!!!!!" << endl;
+        return;
+    }
+    proto.Clear();
+
+    pack(name, content);
 }

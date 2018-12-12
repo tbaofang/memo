@@ -9,12 +9,15 @@
 #include <nav_msgs/OccupancyGrid.h>
 #include <nav_msgs/Path.h>
 #include <std_msgs/String.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <tf2_msgs/TFMessage.h>
 #include <tf/tf.h>
 
 #include "datashare.h"
 #include "proto_msgs.LaserScan.pb.h"
 #include "proto_msgs.OccupancyGrid.pb.h"
 #include "proto_msgs.Path.pb.h"
+#include "proto_msgs.TFMessage.pb.h"
 
 using namespace std;
 
@@ -28,6 +31,8 @@ private:
     ros::Publisher scan_pub_;
     ros::Publisher map_pub_;
     ros::Publisher path_pub_;
+    ros::Publisher tf_pub_;
+    ros::Publisher tf_static_pub_;
 
     boost::thread* data_parse_thread_;
     void runThread();
@@ -36,6 +41,9 @@ private:
 
     void scanPublish(const string& scan);
     void mapPublish(const string& content);
+    void pathPublish(const string& content);
+    void tfPublish(const string& content);
+    void tfStaticPublish(const string& content);
 
 };
 
@@ -43,6 +51,8 @@ ServerDataParse::ServerDataParse():data_parse_thread_(NULL) {
     scan_pub_ = nh_.advertise<sensor_msgs::LaserScan>("/protobuf_test_lidar", 10);
     map_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("/protobuf_test_map", 1);
     path_pub_ = nh_.advertise<nav_msgs::Path>("/protobuf_test_path", 10);
+//    tf_pub_ = nh_.advertise<tf2_msgs::TFMessage>("/protobuf_test_tf", 10);
+//    tf_static_pub_ = nh_.advertise<nav_msgs::Path>("/protobuf_test_tf_static", 10);
 }
 ServerDataParse::~ServerDataParse() {
     if(data_parse_thread_){
@@ -53,13 +63,20 @@ ServerDataParse::~ServerDataParse() {
 
 void ServerDataParse::start(DataShare *datashare) {
     ds_ = datashare;
-    data_parse_thread_ = new boost::thread([&]{runThread();});
+    try {
+        data_parse_thread_ = new boost::thread([&] { runThread(); });
+    }
+    catch(exception &e) {
+
+    }
 }
 
 void ServerDataParse::runThread() {
     string laser{"proto_msg.LaserScan"};
     string map{"proto_msg.OccupancyGrid"};
     string path{"proto_msg.Path"};
+    string tf_message{"proto_msg.TFMessage"};
+    string tf_static_message{"proto_msg.TFStaticMessage"};
     string buffer;
     string content;
     while(ros::ok()) {
@@ -71,7 +88,13 @@ void ServerDataParse::runThread() {
             ds_->server_data_parse_.erase(0, total_len);
             ds_->server_data_parse_mtx_.unlock();
 
-            size_t name_len = stoi(buffer.substr(6, 2));
+            size_t name_len;
+            try{
+                name_len = stoi(buffer.substr(6, 2));
+            }catch (exception &e){
+                cout << e.what() << endl;
+                cout << "server parse throw exceptiong !!!!!!!!" << endl;
+            }
             string name_str = buffer.substr(16, name_len);
             size_t content_start_pos = 6 + 2 + 8 + name_len;
             size_t content_length = total_len - content_start_pos - 4;
@@ -87,13 +110,11 @@ void ServerDataParse::runThread() {
 //            cout << "server_data_parse_ size = " << ds_->server_data_parse_.size() << endl;
 //            cout << "==================" << endl << endl;
 
-        if(!name_str.compare(laser))
-            scanPublish(content);
-        if(!name_str.compare(map))
-            mapPublish(content);
-
-
-
+        if(!name_str.compare(laser))                scanPublish(content);
+        if(!name_str.compare(map))                  mapPublish(content);
+        if(!name_str.compare(path))                 pathPublish(content);
+        if(!name_str.compare(tf_message))           tfPublish(content);
+        if(!name_str.compare(tf_static_message))    tfStaticPublish(content);
         }
     }
 
@@ -156,4 +177,105 @@ void ServerDataParse::mapPublish(const string &content) {
 
     map_pub_.publish(og);
     cout << "publish map succeed!" << endl;
+}
+
+void ServerDataParse::pathPublish(const string &content) {
+    nav_msgs::Path p;
+    geometry_msgs::PoseStamped ps;
+    proto_msg::Path proto_path;
+
+    if(!proto_path.ParseFromString(content)){
+        cout << "parse false!!!!!!!!!!!!!!!" << endl;
+        return;
+    }
+
+    p.header.stamp = static_cast<ros::Time>(proto_path.publish_stamp());
+    p.header.frame_id = proto_path.frame_id();
+
+    for(int i = 0;i < proto_path.poses_size();i ++)
+    {
+        ps.header.stamp = static_cast<ros::Time>(proto_path.poses(i).publish_stamp());
+        ps.header.frame_id = proto_path.poses(i).frame_id();
+        ps.pose.position.x = proto_path.poses(i).x();
+        ps.pose.position.y = proto_path.poses(i).y();
+        ps.pose.position.z = proto_path.poses(i).z();
+        tf::Quaternion qua;
+        qua.setRPY(proto_path.poses(i).roll(),proto_path.poses(i).pitch(),proto_path.poses(i).yaw());
+        ps.pose.orientation.x = qua.x();
+        ps.pose.orientation.y = qua.y();
+        ps.pose.orientation.z = qua.z();
+        ps.pose.orientation.w = qua.w();
+
+        p.poses.push_back(ps);
+    }
+
+    path_pub_.publish(p);
+    cout << "publish path succeed!" << endl;
+}
+
+void ServerDataParse::tfPublish(const string &content) {
+    tf2_msgs::TFMessage tf;
+    geometry_msgs::TransformStamped ts;
+    proto_msg::TFMessage proto_tf;
+
+
+    if(!proto_tf.ParseFromString(content)){
+        cout << "parse false!!!!!!!!!!!!!!!" << endl;
+        return;
+    }
+
+    for(int i = 0;i < proto_tf.tfs_size();i ++)
+    {
+        ts.header.stamp = static_cast<ros::Time>(proto_tf.tfs(i).publish_stamp());
+        ts.header.frame_id = proto_tf.tfs(i).frame_id();
+        ts.child_frame_id = proto_tf.tfs(i).child_frame_id();
+        ts.transform.translation.x = proto_tf.tfs(i).x();
+        ts.transform.translation.y = proto_tf.tfs(i).y();
+        ts.transform.translation.z = proto_tf.tfs(i).z();
+        tf::Quaternion qua;
+        qua.setRPY(proto_tf.tfs(i).roll(),proto_tf.tfs(i).pitch(),proto_tf.tfs(i).yaw());
+        ts.transform.rotation.x = qua.x();
+        ts.transform.rotation.y = qua.y();
+        ts.transform.rotation.z = qua.z();
+        ts.transform.rotation.w = qua.w();
+
+        tf.transforms.push_back(ts);
+    }
+
+    tf_pub_.publish(tf);
+    cout << "publish tf succeed!" << endl;
+
+}
+
+void ServerDataParse::tfStaticPublish(const string &content) {
+    tf2_msgs::TFMessage tf;
+    geometry_msgs::TransformStamped ts;
+    proto_msg::TFMessage proto_tf;
+
+
+    if(!proto_tf.ParseFromString(content)){
+        cout << "parse false!!!!!!!!!!!!!!!" << endl;
+        return;
+    }
+
+    for(int i = 0;i < proto_tf.tfs_size();i ++)
+    {
+        ts.header.stamp = static_cast<ros::Time>(proto_tf.tfs(i).publish_stamp());
+        ts.header.frame_id = proto_tf.tfs(i).frame_id();
+        ts.child_frame_id = proto_tf.tfs(i).child_frame_id();
+        ts.transform.translation.x = proto_tf.tfs(i).x();
+        ts.transform.translation.y = proto_tf.tfs(i).y();
+        ts.transform.translation.z = proto_tf.tfs(i).z();
+        tf::Quaternion qua;
+        qua.setRPY(proto_tf.tfs(i).roll(),proto_tf.tfs(i).pitch(),proto_tf.tfs(i).yaw());
+        ts.transform.rotation.x = qua.x();
+        ts.transform.rotation.y = qua.y();
+        ts.transform.rotation.z = qua.z();
+        ts.transform.rotation.w = qua.w();
+
+        tf.transforms.push_back(ts);
+    }
+
+    tf_static_pub_.publish(tf);
+    cout << "publish tf_static succeed!" << endl;
 }

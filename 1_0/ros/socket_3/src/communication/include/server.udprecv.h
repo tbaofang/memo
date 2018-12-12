@@ -98,8 +98,18 @@ void ServerUdpRecv::runThread() {
             buffer.append(buff, n);
         }
         if (buff[n - 4] == '$' && buff[n - 3] == 'E' && buff[n - 2] == 'N' && buff[n - 1] == 'D') {
-            size_t name_len = stoi(buffer.substr(6, 2));
-            size_t total_len = stoi(buffer.substr(8, 8));
+            size_t name_len;
+            size_t total_len;
+
+            try{
+                name_len = stoi(buffer.substr(6, 2));
+                total_len = stoi(buffer.substr(8, 8));
+            }catch (exception &e){
+                cout << e.what() << endl;
+                cout << "server recv throw exceptiong !!!!!!!!" << endl;
+            }
+//            size_t name_len = stoi(buffer.substr(6, 2));
+//            size_t total_len = stoi(buffer.substr(8, 8));
             string name_str = buffer.substr(16, name_len);
             if (buffer.size() != total_len) {
                 buffer.clear();

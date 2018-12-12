@@ -173,6 +173,7 @@ add_executable(server_node src/server_node.cpp
         protobuf/proto_msgs.Path.pb.cc
         protobuf/proto_msgs.MoveBaseActionGoal.pb.cc
         protobuf/proto_msgs.PoseStamped.pb.cc
+        protobuf/proto_msgs.TFMessage.pb.cc
         )
 target_link_libraries(server_node
         ${catkin_LIBRARIES}
@@ -186,6 +187,7 @@ add_executable(client_node src/client_node.cpp
         protobuf/proto_msgs.Path.pb.cc
         protobuf/proto_msgs.MoveBaseActionGoal.pb.cc
         protobuf/proto_msgs.PoseStamped.pb.cc
+        protobuf/proto_msgs.TFMessage.pb.cc
         )
 target_link_libraries(client_node
         ${catkin_LIBRARIES}
