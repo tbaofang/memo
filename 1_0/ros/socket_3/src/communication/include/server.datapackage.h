@@ -45,6 +45,8 @@ private:
     void poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr &msg);
     void controlCallback(const std_msgs::String::ConstPtr &msg);
 
+    void pack(const string& name, const string& content);
+
 };
 
 ServerDataPackage::ServerDataPackage():data_package_thread_(NULL) {
@@ -75,54 +77,11 @@ void ServerDataPackage::runThread() {
     ros::spin();
 }
 
-void ServerDataPackage::moveBaseActionGoalCallback(const move_base_msgs::MoveBaseActionGoal::ConstPtr &msg) {
-    cout << "enter goal callback" << endl;
-}
-
-void ServerDataPackage::poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr &msg){
-//        cout << " enter poseStamped callback" << endl;
+void ServerDataPackage::pack(const string &name, const string &content) {
     SensorData buff;
-    proto_msg::PoseStamped proto_ps;
-    string name{"proto_msg.PoseStamped"};
-
-    proto_ps.set_stamp(msg->header.stamp.toSec());
-    proto_ps.set_frame_id(msg->header.frame_id);
-    proto_ps.set_x(msg->pose.position.x);
-    proto_ps.set_y(msg->pose.position.y);
-    proto_ps.set_z(msg->pose.position.z);
-    proto_ps.set_q_x(msg->pose.orientation.x);
-    proto_ps.set_q_y(msg->pose.orientation.y);
-    proto_ps.set_q_z(msg->pose.orientation.z);
-    proto_ps.set_q_w(msg->pose.orientation.w);
-    proto_ps.SerializeToString(&buff.content);
-    proto_ps.Clear();
-
-    buff.total_len.resize(8);
     buff.name = name;
-    buff.name_len = to_string(buff.name.size());
-    buff.total_len = to_string(buff.start.size() + buff.name_len.size() + buff.total_len.size() + buff.name.size() + buff.content.size() + buff.terminator.size());
+    buff.content = content;
     buff.total_len.resize(8);
-    buff.all = buff.start + buff.name_len + buff.total_len + buff.name + buff.content + buff.terminator;
-
-    ds_->server_data_package_mtx_.lock();
-    ds_->server_data_package_.append(buff.all);
-    ds_->server_data_package_mtx_.unlock();
-
-//    cout << endl << "------------------------" << endl;
-//    cout << buff.start << endl;
-//    cout << buff.name << endl;
-//    cout << buff.total_len << " " << buff.all.size() << endl;
-//    cout << buff.terminator << endl;
-//    cout << "server_data_package_ size : " << ds_->server_data_package_.size() << endl;
-//    cout << "------------------------" << endl << endl;
-}
-
-void ServerDataPackage::controlCallback(const std_msgs::String::ConstPtr &msg) {
-    SensorData buff;
-    string name = "proto_msg.control";
-    buff.content = msg->data;
-    buff.total_len.resize(8);
-    buff.name = name;
     buff.name_len = to_string(buff.name.size());
     buff.total_len = to_string(buff.start.size() + buff.name_len.size() + buff.total_len.size() + buff.name.size() + buff.content.size() + buff.terminator.size());
     buff.total_len.resize(8);
@@ -139,6 +98,39 @@ void ServerDataPackage::controlCallback(const std_msgs::String::ConstPtr &msg) {
     cout << buff.terminator << endl;
     cout << "server_data_package_ size : " << ds_->server_data_package_.size() << endl;
     cout << "------------------------" << endl << endl;
+}
 
+
+void ServerDataPackage::moveBaseActionGoalCallback(const move_base_msgs::MoveBaseActionGoal::ConstPtr &msg) {
+    cout << "enter goal callback" << endl;
+}
+
+void ServerDataPackage::poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr &msg){
+//        cout << " enter poseStamped callback" << endl;
+    proto_msg::PoseStamped proto_ps;
+    string name{"proto_msg.PoseStamped"};
+    string content;
+
+    proto_ps.set_stamp(msg->header.stamp.toSec());
+    proto_ps.set_frame_id(msg->header.frame_id);
+    proto_ps.set_x(msg->pose.position.x);
+    proto_ps.set_y(msg->pose.position.y);
+    proto_ps.set_z(msg->pose.position.z);
+    proto_ps.set_q_x(msg->pose.orientation.x);
+    proto_ps.set_q_y(msg->pose.orientation.y);
+    proto_ps.set_q_z(msg->pose.orientation.z);
+    proto_ps.set_q_w(msg->pose.orientation.w);
+    proto_ps.SerializeToString(&content);
+    proto_ps.Clear();
+
+    pack(name, content);
 
 }
+
+void ServerDataPackage::controlCallback(const std_msgs::String::ConstPtr &msg) {
+    string name{"proto_msg.control"};
+    string content{msg->data};
+
+    pack(name, content);
+}
+

@@ -92,81 +92,36 @@ void ServerUdpRecv::runThread() {
             perror("recvfrom error");
         //        cout << "recv_size=" << n << endl;
 
-
         if (!strncmp(reinterpret_cast<const char *>(&buff), reinterpret_cast<const char *>(&header), 6)) {
             buffer.assign(buff, n);
         }else{
             buffer.append(buff, n);
         }
-        if (buff[n-4] == '$' && buff[n-3] == 'E' && buff[n-2] == 'N' && buff[n-1] == 'D'){
+        if (buff[n - 4] == '$' && buff[n - 3] == 'E' && buff[n - 2] == 'N' && buff[n - 1] == 'D') {
             size_t name_len = stoi(buffer.substr(6, 2));
             size_t total_len = stoi(buffer.substr(8, 8));
             string name_str = buffer.substr(16, name_len);
-
-            if (buffer.size() != total_len)
-            {
+            if (buffer.size() != total_len) {
                 buffer.clear();
                 cout << "package loss or out of order!!!!!!!!!";
 
             }
-            if(ds_->server_data_parse_.size() < 2000000) {
+            else if(ds_->server_data_parse_.size() < 3000000) {
                 ds_->server_data_parse_mtx_.lock();
                 ds_->server_data_parse_.append(buffer);
                 ds_->server_data_parse_mtx_.unlock();
+
+                cout << endl << "================" << endl;
+                cout << "recv_n = " << head_n << endl;
+                cout << buffer.substr(0, 6) << endl;
+                cout << "head_len = " << name_len << endl;
+                cout << "name = " << name_str << endl;
+                cout << "total_len = " << total_len << endl;
+                cout << buffer.substr(total_len - 4, 4) << endl;
+                cout << "server_data_package_ size = " << ds_->server_data_package_.size() << endl;
+                cout << "==================" << endl << endl;
             }
-
-            cout << endl
-                 << "================" << endl;
-            cout << "recv_n = " << head_n << endl;
-            cout << buffer.substr(0, 6) << endl;
-            cout << "head_len = " << name_len << endl;
-            cout << "name = " << name_str << endl;
-            cout << "total_len = " << total_len << endl;
-            cout << buffer.substr(total_len - 4, 4) << endl;
-            cout << "server_data_package_ size = " << ds_->server_data_package_.size() << endl;
-            cout << "==================" << endl
-                 << endl;
-
         }
-
-
-//        if (!strncmp(reinterpret_cast<const char *>(&buff), reinterpret_cast<const char *>(&header), 6)) {
-////            if (++head_n > 1) {
-//            if (buff[n-4] == '$' && buff[n-3] == 'E' && buff[n-2] == 'N' && buff[n-1] == 'D'){
-//                buffer.append(buff);
-//                size_t name_len = stoi(buffer.substr(6, 2));
-//                size_t total_len = stoi(buffer.substr(8, 8));
-//                string name_str = buffer.substr(16, name_len);
-//
-//                if (buffer.size() != total_len)
-//                {
-//                    buffer.clear();
-//                    cout << "package loss or out of order!!!!!!!!!";
-//
-//                }
-//                if(ds_->server_data_parse_.size() < 2000000) {
-//                    ds_->server_data_parse_mtx_.lock();
-//                    ds_->server_data_parse_.append(buffer);
-//                    ds_->server_data_parse_mtx_.unlock();
-//                }
-//
-////                cout << endl
-////                     << "================" << endl;
-////                cout << "recv_n = " << head_n << endl;
-////                cout << buffer.substr(0, 6) << endl;
-////                cout << "head_len = " << name_len << endl;
-////                cout << "name = " << name_str << endl;
-////                cout << "total_len = " << total_len << endl;
-////                cout << buffer.substr(total_len - 4, 4) << endl;
-////                cout << "server_data_package_ size = " << ds_->server_data_package_.size() << endl;
-////                cout << "==================" << endl
-////                     << endl;
-//
-//            }
-//            buffer.assign(buff, n);
-//        } else {
-//            buffer.append(buff, n);
-//        }
     }
 }
 

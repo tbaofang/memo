@@ -35,6 +35,7 @@ private:
     DataShare* ds_;
 
     void scanPublish(const string& scan);
+    void mapPublish(const string& content);
 
 };
 
@@ -88,6 +89,8 @@ void ServerDataParse::runThread() {
 
         if(!name_str.compare(laser))
             scanPublish(content);
+        if(!name_str.compare(map))
+            mapPublish(content);
 
 
 
@@ -122,4 +125,35 @@ void ServerDataParse::scanPublish(const string &scan) {
 
     scan_pub_.publish(ls);
     cout << "publish lidar succeed!" << endl;
+}
+
+void ServerDataParse::mapPublish(const string &content) {
+    nav_msgs::OccupancyGrid og;
+    proto_msg::OccupancyGrid proto_map;
+
+    bool re = proto_map.ParseFromString(content);
+    if(!re)
+    {
+        cout << "parse false!!!!!!!!!!!!!!!" << endl;
+        return;
+    }
+
+    og.header.frame_id = proto_map.frame_id();
+    og.header.stamp = static_cast<ros::Time>(proto_map.publish_stamp());
+    og.info.map_load_time = static_cast<ros::Time>(proto_map.load_time());
+    og.info.resolution = proto_map.resolution();
+    og.info.width = proto_map.width();
+    og.info.height = proto_map.height();
+    og.info.origin.position.x = proto_map.x();
+    og.info.origin.position.y = proto_map.y();
+    og.info.origin.position.z = proto_map.z();
+    og.info.origin.orientation.x = proto_map.q_x();
+    og.info.origin.orientation.y = proto_map.q_y();
+    og.info.origin.orientation.z = proto_map.q_z();
+    og.info.origin.orientation.w = proto_map.q_w();
+    std::string m = proto_map.map_data();
+    og.data.assign(m.begin(), m.end());
+
+    map_pub_.publish(og);
+    cout << "publish map succeed!" << endl;
 }
