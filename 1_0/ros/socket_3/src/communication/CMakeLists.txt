@@ -117,7 +117,7 @@ include_directories(${PROTOBUF_INCLUDE_DIRS})
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include src
 #  LIBRARIES communication
 #  CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
@@ -132,6 +132,7 @@ catkin_package(
 include_directories(
         include
         protobuf
+        src
         ${catkin_INCLUDE_DIRS}
 )
 
@@ -167,7 +168,11 @@ include_directories(
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
 
-add_executable(server_node src/server_node.cpp
+add_executable(server_node  src/server_node.cpp
+        src/server/server.datapackage.cpp
+        src/server/server.dataparse.cpp
+        src/server/server.udprecv.cpp
+        src/server/server.udpsend.cpp
         protobuf/proto_msgs.LaserScan.pb.cc
         protobuf/proto_msgs.OccupancyGrid.pb.cc
         protobuf/proto_msgs.Path.pb.cc
@@ -182,6 +187,10 @@ target_link_libraries(server_node
         )
 
 add_executable(client_node src/client_node.cpp
+        src/client/client.datapackage.cpp
+        src/client/client.dataparse.cpp
+        src/client/client.udprecv.cpp
+        src/client/client.udpsend.cpp
         protobuf/proto_msgs.LaserScan.pb.cc
         protobuf/proto_msgs.OccupancyGrid.pb.cc
         protobuf/proto_msgs.Path.pb.cc
@@ -195,6 +204,8 @@ target_link_libraries(client_node
         ${Boost_LOG_LIBRARY}
         ${PROTOBUF_LIBRARIES}
         )
+
+
 
 
 #############
