@@ -1,4 +1,4 @@
-#include "client.udprecv.h"
+#include "client/client.udprecv.h"
 
 
 ClientUdpRecv::ClientUdpRecv():data_recv_thread_(NULL) {
@@ -36,22 +36,6 @@ void ClientUdpRecv::runThread() {
         perror("socket failed:");
     }
 
-
-//    int flag = fcntl(sockfd, F_GETFL, 0);
-//    if (flag < 0) {
-//        perror("fcntl F_GETFL fail");
-//    }
-//    if (fcntl(sockfd, F_SETFL, flag | O_NONBLOCK) < 0) {
-//        perror("fcntl F_SETFL fail");
-//    }
-
-//    struct timeval timeout;
-//    timeout.tv_sec = 1;
-//    timeout.tv_usec = 0;
-//    if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1) {
-//        perror("setsockopt failed:");
-//    }
-
     if(bind(sockfd, (struct sockaddr *)&srvAddr, sizeof(srvAddr)) == -1)
         perror("bind failed:");
 
@@ -68,17 +52,24 @@ void ClientUdpRecv::runThread() {
     while (ros::ok())
     {
         bzero(&buff, sizeof(buff));
-        n = recvfrom(sockfd, buff, recv_size_, 0, (struct sockaddr *)&cliAddr, (socklen_t *)&cliAddrLen);
+
+        try {
+            n = recvfrom(sockfd, buff, recv_size_, 0, (struct sockaddr *) &cliAddr, (socklen_t *) &cliAddrLen);
+        }catch (exception &e){
+            ROS_ERROR("recv catch exception %s", e.what());
+        }
+
+
         if (n == -1)
             perror("recvfrom error");
         cout << "recv_size=" << n << endl;
 
         if (!strncmp(reinterpret_cast<const char *>(&buff), reinterpret_cast<const char *>(&header), 6)) {
             buffer.assign(buff, n);
-            cout << "11" << buffer << endl;
+//            cout << "11" << buffer << endl;
         }else{
             buffer.append(buff, n);
-            cout << "12" << buffer << endl;
+//            cout << "12" << buffer << endl;
         }
         if (buff[n-4] == '$' && buff[n-3] == 'E' && buff[n-2] == 'N' && buff[n-1] == 'D'){
             cout << "13" << buffer << endl;
@@ -89,13 +80,13 @@ void ClientUdpRecv::runThread() {
             cout << "buffer.size = " << buffer.size() << endl;
             cout << "total_len = " << total_len << endl;
 
-            if (buffer.size() != total_len)
-            {
-                buffer.clear();
-                cout << "package loss or out of order!!!!!!!!!";
+//            if (buffer.size() != total_len)
+//            {
+//                buffer.clear();
+//                cout << "package loss or out of order!!!!!!!!!";
 
-            }
-            else if(ds_->client_data_parse_.size() < buffer_parse_size_) {
+//            }
+            if(ds_->client_data_parse_.size() < buffer_parse_size_) {
                 ds_->client_data_parse_mtx_.lock();
                 ds_->client_data_parse_.append(buffer);
                 ds_->client_data_parse_mtx_.unlock();

@@ -1,8 +1,8 @@
-#include "datashare.h"
-#include "../include/client.datapackage.h"
-#include "client.dataparse.h"
-#include "client.udprecv.h"
-#include "client.udpsend.h"
+#include "utils/datashare.h"
+#include "client/client.datapackage.h"
+#include "client/client.dataparse.h"
+#include "client/client.udprecv.h"
+#include "client/client.udpsend.h"
 
 #include <iostream>
 int main(int argc, char** argv){

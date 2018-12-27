@@ -1,4 +1,4 @@
-#include "server.udprecv.h"
+#include "server/server.udprecv.h"
 
 ServerUdpRecv::ServerUdpRecv() : data_recv_thread_(NULL)
 {
@@ -60,31 +60,42 @@ void ServerUdpRecv::runThread()
     string buffer;
     char header[7] = "$START";
     size_t head_n = 0;
+    size_t i = 0;
     while (ros::ok())
     {
         bzero(&buff, sizeof(buff));
-        n = recvfrom(sockfd, buff, recv_size_, 0, (struct sockaddr *)&cliAddr, (socklen_t *)&cliAddrLen);
-        if (n == -1)
 
+        n = recvfrom(sockfd, buff, recv_size_, 0, (struct sockaddr *) &cliAddr, (socklen_t *) &cliAddrLen);
+
+//        try {
+//            n = recvfrom(sockfd, buff, recv_size_, 0, (struct sockaddr *) &cliAddr, (socklen_t *) &cliAddrLen);
+//        }catch (exception& e){
+//            ROS_ERROR("recv catch exception: %s", e.what());
+//        }
+
+        if (n == -1)
             perror("recvfrom error");
 
         cout << "recv_size=" << n << endl;
-
         for (size_t i = 2; i < n; ++i)
         {
             buff[i - 2] = buff[i];
         }
-        buff[n - 1] = '\0';
-
+//        buff[n - 1] = '\0';
         n -= 2;
         if (!strncmp(reinterpret_cast<const char *>(&buff), reinterpret_cast<const char *>(&header), 6))
         {
             buffer.assign(buff, n);
+
         }
         else
         {
             buffer.append(buff, n);
         }
+
+//        cout << "buffer size = " << buffer.size() << endl;
+//        cout << "buffer  = " << buffer.substr(0,30) << endl;
+//        cout << "buffer  = " << buffer.substr(buffer.size() -20,20) << endl;
         if (buff[n - 4] == '$' && buff[n - 3] == 'E' && buff[n - 2] == 'N' && buff[n - 1] == 'D')
         {
             size_t name_len;
@@ -114,17 +125,17 @@ void ServerUdpRecv::runThread()
                 ds_->server_data_parse_.append(buffer);
                 ds_->server_data_parse_mtx_.unlock();
 
-                // cout << endl
-                //      << "================" << endl;
-                // cout << "recv_n = " << head_n << endl;
-                // cout << buffer.substr(0, 6) << endl;
-                // cout << "head_len = " << name_len << endl;
-                // cout << "name = " << name_str << endl;
-                // cout << "total_len = " << total_len << endl;
-                // cout << buffer.substr(total_len - 4, 4) << endl;
-                // cout << "server_data_package_ size = " << ds_->server_data_package_.size() << endl;
-                // cout << "==================" << endl
-                //      << endl;
+                 cout << endl
+                      << "================" << endl;
+                 cout << "recv_n = " << head_n << endl;
+                 cout << buffer.substr(0, 6) << endl;
+                 cout << "head_len = " << name_len << endl;
+                 cout << "name = " << name_str << endl;
+                 cout << "total_len = " << total_len << endl;
+                 cout << buffer.substr(total_len - 4, 4) << endl;
+                 cout << "server_data_package_ size = " << ds_->server_data_package_.size() << endl;
+                 cout << "==================" << endl
+                      << endl;
             }
         }
     }

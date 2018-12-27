@@ -1,4 +1,4 @@
-#include "server.udpsend.h"
+#include "server/server.udpsend.h"
 
 ServerUdpSend::ServerUdpSend():data_send_thread_(NULL)
 {
@@ -48,7 +48,11 @@ void ServerUdpSend::runThread() {
             while (!buf.empty())
             {
                 send_size = std::min(static_cast<int>(buf.size()), static_cast<int>(send_size_));
-                n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *)&targetAddr, sizeof(targetAddr));
+                try {
+                    n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *) &targetAddr, sizeof(targetAddr));
+                }catch (exception& e){
+                    ROS_ERROR("send catch exception: %s", e.what());
+                }
                 if (n == -1)
                     perror("sendto error");
                 cout << "send size: " <<  n << endl;

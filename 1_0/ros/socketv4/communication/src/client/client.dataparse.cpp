@@ -1,7 +1,11 @@
-#include "client.dataparse.h"
+#include "client/client.dataparse.h"
 
 ClientDataParse::ClientDataParse() : data_parse_thread_(NULL)
 {
+    if(!nh_.getParam("client_node/mode", mode_)){
+        ROS_ERROR("data parse not get mode!!");
+        return;
+    }
     //    pose_stamped_pub_ = nh_.advertise<geometry_msgs::PoseStamped>("/protobuf_pose_stamped", 10);
     pose_stamped_pub_ = nh_.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 10);
 }
@@ -24,6 +28,7 @@ void ClientDataParse::runThread()
 {
     string pose{"proto_msg.PoseStamped"};
     string control{"proto_msg.control"};
+    string tf_static_request{"proto_msg.TFStaticRequest"};
     string buffer;
     string content;
     while (ros::ok())
@@ -57,9 +62,19 @@ void ClientDataParse::runThread()
 
             if (!name_str.compare(pose))
                 poseStampedPublish(content);
-
             if (!name_str.compare(control))
                 controlPublish(content);
+
+            if(!name_str.compare(tf_static_request))
+                sendTFStaticAgain();
+
+            if(mode_ == "nav"){
+                string map_request{"proto_msg.MapRequest"};
+
+                if(!name_str.compare(map_request))
+                    sendMapAgain();
+            }
+
         }
     }
 }
@@ -98,4 +113,35 @@ void ClientDataParse::controlPublish(const string &msg)
     cout << "enter control" << endl;
     cout << msg << endl;
     ds_->client_control_command_ = msg;
+}
+
+void ClientDataParse::sendMapAgain() {
+    cout << "ds_->client_backup_map_.size() = " << ds_->client_backup_map_.size() << endl;
+    if(ds_->client_backup_map_.size() == 0){
+        ROS_ERROR("map buffer is empty!");
+        return;
+    }
+    string name{"proto_msg.OccupancyGrid"};
+    ds_->client_backup_map_mtx_.lock();
+    string content = ds_->client_backup_map_;
+    ds_->client_backup_map_mtx_.unlock();
+    string package = common.dataPack(name, content);
+    ds_->client_data_package_mtx_.lock();
+    ds_->client_data_package_.append(package);
+    ds_->client_data_package_mtx_.unlock();
+}
+
+void ClientDataParse::sendTFStaticAgain() {
+    if(ds_->client_backup_tf_static_.size() == 0){
+        ROS_ERROR("tf_static buffer is empty!");
+        return;
+    }
+    string name{"proto_msg.TFStaticMessage"};
+    ds_->client_backup_tf_static_mtx_.lock();
+    string content = ds_->client_backup_tf_static_;
+    ds_->client_backup_tf_static_mtx_.unlock();
+    string package = common.dataPack(name, content);
+    ds_->client_data_package_mtx_.lock();
+    ds_->client_data_package_.append(package);
+    ds_->client_data_package_mtx_.unlock();
 }

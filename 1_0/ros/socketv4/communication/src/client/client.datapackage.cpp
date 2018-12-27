@@ -1,10 +1,14 @@
-#include "client.datapackage.h"
+#include "client/client.datapackage.h"
 
 ClientDataPackage::ClientDataPackage() : data_package_thread_(NULL)
 {
     if (!nh_.getParam("/client_node/bufferPackageSize", bufferPackageSize_))
         bufferPackageSize_ = 3;
     buffer_package_size_ = bufferPackageSize_ * 1024 * 1024;
+    if(!nh_.getParam("/client_node/mode", mode_)){
+        ROS_ERROR("datapackage can not get mode!");
+        return;
+    }
 }
 
 ClientDataPackage::~ClientDataPackage()
@@ -25,7 +29,7 @@ void ClientDataPackage::start(DataShare *datashare)
 void ClientDataPackage::runThread()
 {
 
-    cout << "enter client datat package!" << endl;
+    cout << "enter client data package!" << endl;
     ros::Subscriber lidar_sub = nh_.subscribe("/scan", 10, &ClientDataPackage::lidarCallback, this);
     ros::Subscriber map_sub = nh_.subscribe("/map", 1, &ClientDataPackage::mapCallback, this);
     ros::Subscriber path_sub = nh_.subscribe("/move_base/NavfnROS/plan", 10, &ClientDataPackage::pathCallback, this);
@@ -67,7 +71,6 @@ void ClientDataPackage::pack(const string &name, const string &content)
 
 void ClientDataPackage::lidarCallback(const sensor_msgs::LaserScan::ConstPtr &scan)
 {
-
     if (ds_->client_control_command_.compare("start"))
         return;
     string name = "proto_msg.LaserScan";
@@ -96,9 +99,6 @@ void ClientDataPackage::lidarCallback(const sensor_msgs::LaserScan::ConstPtr &sc
 
 void ClientDataPackage::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg)
 {
-
-    cout << "enter parse map!!!!!!!!!!" << endl;
-
     if (ds_->client_control_command_.compare("start"))
         return;
     string name = "proto_msg.OccupancyGrid";
@@ -132,6 +132,13 @@ void ClientDataPackage::mapCallback(const nav_msgs::OccupancyGrid::ConstPtr &msg
     }
 
     pack(name, content);
+
+    if(mode_ == "nav") {
+        ds_->client_backup_map_mtx_.lock();
+        ds_->client_backup_map_ = content;
+        ds_->client_backup_map_mtx_.unlock();
+        ROS_INFO("ds_->client_backup_map_ size = %d", static_cast<int>(ds_->client_backup_map_.size()));
+    }
 }
 
 void ClientDataPackage::pathCallback(const nav_msgs::Path::ConstPtr &msg)
@@ -248,6 +255,12 @@ void ClientDataPackage::TFStaticCallback(const tf2_msgs::TFMessage::ConstPtr &ms
     proto.Clear();
 
     pack(name, content);
+
+    ds_->client_backup_tf_static_mtx_.lock();
+    ds_->client_backup_tf_static_ = content;
+    ds_->client_backup_tf_static_mtx_.unlock();
+    ROS_INFO("ds_->client_backup_tf_static_ size = %d", static_cast<int>(ds_->client_backup_tf_static_.size()));
+
 }
 
 void ClientDataPackage::OdometryCallback(const nav_msgs::Odometry::ConstPtr &msg)

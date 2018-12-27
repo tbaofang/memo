@@ -131,6 +131,9 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
         include
+        include/client
+        include/server
+        include/utils
         protobuf
         src
         ${catkin_INCLUDE_DIRS}
@@ -168,11 +171,14 @@ include_directories(
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
 
-add_executable(server_node  src/server_node.cpp
+add_executable(server_node
+        src/server_node.cpp
         src/server/server.datapackage.cpp
         src/server/server.dataparse.cpp
         src/server/server.udprecv.cpp
         src/server/server.udpsend.cpp
+        src/server/server.monitor.cpp
+        src/utils/common.cpp
         protobuf/proto_msgs.LaserScan.pb.cc
         protobuf/proto_msgs.OccupancyGrid.pb.cc
         protobuf/proto_msgs.Path.pb.cc
@@ -187,11 +193,13 @@ target_link_libraries(server_node
         ${PROTOBUF_LIBRARIES}
         )
 
-add_executable(client_node src/client_node.cpp
+add_executable(client_node
+        src/client_node.cpp
         src/client/client.datapackage.cpp
         src/client/client.dataparse.cpp
         src/client/client.udprecv.cpp
         src/client/client.udpsend.cpp
+        src/utils/common.cpp
         protobuf/proto_msgs.LaserScan.pb.cc
         protobuf/proto_msgs.OccupancyGrid.pb.cc
         protobuf/proto_msgs.Path.pb.cc

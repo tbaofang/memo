@@ -1,12 +1,12 @@
-#include "server.dataparse.h"
+#include "server/server.dataparse.h"
 
 ServerDataParse::ServerDataParse() : data_parse_thread_(NULL)
 {
     scan_pub_ = nh_.advertise<sensor_msgs::LaserScan>("/protobuf_test_lidar", 10);
     map_pub_ = nh_.advertise<nav_msgs::OccupancyGrid>("/protobuf_test_map", 1);
     path_pub_ = nh_.advertise<nav_msgs::Path>("/protobuf_test_path", 10);
-    tf_pub_ = nh_.advertise<tf2_msgs::TFMessage>("/protobuf_test_tf", 10);
-    tf_static_pub_ = nh_.advertise<nav_msgs::Path>("/protobuf_test_tf_static", 10);
+    tf_pub_ = nh_.advertise<tf2_msgs::TFMessage>("/tf", 10);
+    tf_static_pub_ = nh_.advertise<nav_msgs::Path>("/tf_static", 10);
     odom_pub_ = nh_.advertise<nav_msgs::Odometry>("/protobuf_test_odom", 10);
 }
 ServerDataParse::~ServerDataParse()

@@ -1,4 +1,4 @@
-#include "client.udpsend.h"
+#include "client/client.udpsend.h"
 
 
 ClientUdpSend::ClientUdpSend():data_send_thread_(NULL)
@@ -42,7 +42,7 @@ void ClientUdpSend::runThread() {
         if (ds_->client_data_package_.size() > 0 )
         {
             size_t total_len = stoi(ds_->client_data_package_.substr(8, 8));
-            ROS_ERROR("package size: %d; total_len: %d",ds_->client_data_package_.size(), total_len);
+            ROS_INFO("send package size: %d; total_len: %d", static_cast<int>(ds_->client_data_package_.size()), static_cast<int>(total_len));
             ds_->client_data_package_mtx_.lock();
             buf.append(ds_->client_data_package_, 0, total_len);
             ds_->client_data_package_.erase(0, total_len);
@@ -51,8 +51,15 @@ void ClientUdpSend::runThread() {
             while (!buf.empty())
             { 
                 buf.insert(0,"LS");
+//                buf.insert(0, to_string(i++));
+//                cout << "send count = " <<  i++ << endl;
                 send_size = std::min(static_cast<int>(buf.size()), static_cast<int>(send_size_));
-                n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *)&targetAddr, sizeof(targetAddr));
+
+                try {
+                    n = sendto(sockdf, buf.data(), send_size, 0, (struct sockaddr *) &targetAddr, sizeof(targetAddr));
+                }catch(exception& e){
+                    ROS_ERROR("send catch exception %s", e.what());
+                }
                 if (n == -1)
                     perror("sendto error");
                 // cout << "send size: " <<  n << endl;

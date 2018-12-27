@@ -1,4 +1,4 @@
-#include "server.datapackage.h"
+#include "server/server.datapackage.h"
 
 ServerDataPackage::ServerDataPackage():data_package_thread_(NULL) {
     if(!nh_.getParam("/server_node/bufferPackageSize", bufferPackageSize_))
