@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: lsrobot
+Description: Description of lsrobot
+Version: 0.0.1
+Cflags: -I/home/tbf/projects/work/robot/src/cmake-build-debug/devel/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib 
+Requires: std_msgs tf roscpp sensor_msgs message_runtime rospy geometry_msgs move_base_msgs actionlib_msgs

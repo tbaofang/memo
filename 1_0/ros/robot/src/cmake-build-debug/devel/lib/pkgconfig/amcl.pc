@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: amcl
+Description: Description of amcl
+Version: 1.12.13
+Cflags: -I/home/tbf/projects/work/robot/src/cmake-build-debug/devel/include -I/home/tbf/projects/work/robot/src/amcl/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib -lamcl_sensors -lamcl_map -lamcl_pf
+Requires: rosbag roscpp dynamic_reconfigure tf lsrobot nav_msgs std_srvs

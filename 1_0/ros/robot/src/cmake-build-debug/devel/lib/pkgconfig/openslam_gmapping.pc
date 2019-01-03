@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: openslam_gmapping
+Description: Description of openslam_gmapping
+Version: 0.1.2
+Cflags: -I/home/tbf/projects/work/robot/src/openslam_gmapping/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib -lgridfastslam -lscanmatcher -lsensor_base -lsensor_range -lsensor_odometry -lutils
+Requires: 

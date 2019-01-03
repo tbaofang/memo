@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: move_base
+Description: Description of move_base
+Version: 1.12.13
+Cflags: -I/home/tbf/projects/work/robot/src/cmake-build-debug/devel/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib 
+Requires: roscpp dynamic_reconfigure

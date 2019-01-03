@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: sl
+Description: Description of sl
+Version: 1.14.2
+Cflags: -I/home/tbf/projects/work/robot/src/cmake-build-debug/devel/include -I/home/tbf/projects/work/robot/src/sl/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib -lLaser
+Requires: roscpp message_runtime tf costmap_2d sensor_msgs nav_core

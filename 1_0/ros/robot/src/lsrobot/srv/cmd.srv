@@ -1,0 +1,4 @@
+int32 cmd
+string str
+---
+int32 result

@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: ls01b
+Description: Description of ls01b
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib 
+Requires: 

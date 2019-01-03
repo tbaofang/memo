@@ -1,0 +1,51 @@
+#A dummy file loaded when no custom param file is given 
+
+robot_radius: 0.2  # distance a circular robot should be clear of the obstacle
+# footprint: [[x0, y0], [x1, y1], ... [xn, yn]]  # if the robot is not circular
+
+inflation_layer:
+  inflation_radius:     0.5  # max. distance from an obstacle at which costs are incurred for planning paths.
+
+obstacle_layer:
+  scan:
+    data_type: LaserScan
+    topic: scan
+    marking: true
+    clearing: true
+    min_obstacle_height: 0.25
+    max_obstacle_height: 0.35
+
+clearing_rotation_allowed: false
+
+DWAPlannerROS:
+# Robot Configuration Parameters
+  max_vel_x: 0.4  # 0.55
+  min_vel_x: 0.0 
+
+  max_vel_y: 0.0  # diff drive robot
+  min_vel_y: 0.0  # diff drive robot
+
+  max_trans_vel: 0.5 # choose slightly less than the base's capability
+  min_trans_vel: 0.1  # this is the min trans velocity when there is negligible rotational velocity
+  trans_stopped_vel: 0.1
+
+  # Warning!
+  #   do not set min_trans_vel to 0.0 otherwise dwa will always think translational velocities
+  #   are non-negligible and small in place rotational velocities will be created.
+
+  max_rot_vel: 0.8  # choose slightly less than the base's capability
+  min_rot_vel: 0.4  # this is the min angular velocity when there is negligible translational velocity
+  rot_stopped_vel: 0.4
+  
+  acc_lim_x: 1.0 # maximum is theoretically 2.0, but we 
+  acc_lim_theta: 6.5
+  acc_lim_y: 0.0      # diff drive robot
+
+
+
+NavfnROS:
+  allow_unknown: false          #Specifies whether or not to allow navfn to create plans that traverse unknown space, default true
+                                #Needs to have track_unknown_space: true in the obstacle / voxel layer (in costmap_commons_param) to work
+  
+  default_tolerance: 0.0        #If the goal is in an obstacle, the planer will plan to the nearest point in the radius of default_tolerance, default 0.0
+                                #The area is always searched, so could be slow for big values

@@ -1,0 +1,8 @@
+Laser:
+ laser_type: 1      # type option: 1->ls01d; 2->n301_serial  3->n301_ethernet 4->ls01b
+ frame_id: laser_link    # the frame id used for TF
+ scan_topic: scan  # topic name for laser data output
+ truncated_angle_min: -1  # -1 means disable truncation function
+ truncated_angle_max: -1  # all data in the angle range [truncated_angle_min:truncated_angle_max] will be discarded
+ device_ip: 192.168.1.222  # IP address of N301 laser, only useful when the laser type is 3
+ device_port: 2368         # IP port of N301 laser, only useful when the laser type is 3

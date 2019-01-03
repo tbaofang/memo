@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="sl" type="sl" name="sl">
+   <param name="onceorloop" value="true"/>
+   <param name="timec" value="20"/>
+
+  </node>
+</launch>

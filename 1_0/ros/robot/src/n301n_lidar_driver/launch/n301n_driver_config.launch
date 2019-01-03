@@ -1,0 +1,16 @@
+<launch>
+    <arg name="laser_link" default="laser_link" />
+    <arg name="angle_disable_min" default="-1" />
+    <arg name="angle_disable_max" default="-1" />
+
+    <node pkg="n301n_lidar_driver" type="n301n_publisher" name="n301n_publisher" output="screen">
+        <param name="port" value="/dev/laser"/>
+        <param name="baud_rate" value="230400"/>
+        <param name="frame_id" value="$(arg laser_link)"/>
+        <param name="duration" value="0.5"/>
+        <param name="max_range" value="10.0"/>
+        <param name="min_range" value="0.06"/>
+        <param name="angle_disable_min" value="$(arg angle_disable_min)"/>
+        <param name="angle_disable_max" value="$(arg angle_disable_max)"/>
+    </node>
+</launch>

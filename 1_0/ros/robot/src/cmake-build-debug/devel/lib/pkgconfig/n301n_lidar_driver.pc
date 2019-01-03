@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: n301n_lidar_driver
+Description: Description of n301n_lidar_driver
+Version: 0.1.0
+Cflags: -I/home/tbf/projects/work/robot/src/n301n_lidar_driver/include
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: kobuki_safety_controller
+Description: Description of kobuki_safety_controller
+Version: 0.6.8
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -lkobuki_safety_controller_nodelet
+Requires: rospy roscpp nodelet pluginlib std_msgs geometry_msgs kobuki_msgs yocs_controllers ecl_threads dynamic_reconfigure

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: ls01d
+Description: Description of ls01d
+Version: 0.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: roscpp rospy std_msgs message_runtime

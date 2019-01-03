@@ -1,0 +1,8 @@
+prefix=/home/tbf/projects/work/robot/src/cmake-build-debug/devel
+
+Name: lsrobot_node
+Description: Description of lsrobot_node
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/tbf/projects/work/robot/src/cmake-build-debug/devel/lib 
+Requires: lsrobot roscpp tf

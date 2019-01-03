@@ -1,0 +1,19 @@
+<launch>
+	<arg name="scan_topic" default="scan" />
+	<arg name="laser_link" default="laser_link" />
+	<arg name="angle_disable_min" default="-1" />
+	<arg name="angle_disable_max" default="-1" />
+	
+    <node name="ls01d" pkg="ls01d" type="ls01d" output="screen">
+　　		<param name="scan_topic" value="$(arg scan_topic)"/>         
+　　	    <param name="laser_link" value="$(arg laser_link)"/>  
+　　	    <param name="serial_port" value="/dev/laser"/>  
+		<param name="zero_as_max" value="false"/>        
+		<param name="min_as_zero" value="false"/>        
+		<param name="angle_disable_min" value="$(arg angle_disable_min)"/>    
+		<param name="angle_disable_max" value="$(arg angle_disable_max)"/>
+		<param name="inverted" value="false"/>
+	</node>
+
+<!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ls01d)/launch/rviz.rviz"/>-->
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="lsrobot" name="serial_server" type="SerialControl_Server.py">
+	<param name="baudrate" value="115200"/>
+	<param name="port" value="/dev/ttyAMA4"/>
+    <param name="map_file" value="/home/fa/serial_map.txt"/>
+    </node>
+</launch>

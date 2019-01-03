@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: lsrobot
+Description: Description of lsrobot
+Version: 0.0.1
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib 
+Requires: std_msgs tf roscpp sensor_msgs message_runtime rospy geometry_msgs move_base_msgs actionlib_msgs
