@@ -257,6 +257,8 @@ void ServerDataParse::tfStaticPublish(const string &content)
 
     tf_static_pub_.publish(tf);
     cout << "publish tf_static succeed!" << endl;
+
+    ds_->server_tf_static_state_ = true;
 }
 
 void ServerDataParse::odomPublish(const string &content)

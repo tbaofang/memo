@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="leg_detect" type="leg_detect_node" name="leg_detect_node" output="screen" />
+</launch>
