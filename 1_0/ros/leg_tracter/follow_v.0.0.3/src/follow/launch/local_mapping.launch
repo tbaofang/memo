@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="follow" type="local_mapping_node" name="local_mapping_node"  output="screen"/>
+    <!--<node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="1 0 0 0 0 0 1 link1_parent link1 100" />-->
+</launch>

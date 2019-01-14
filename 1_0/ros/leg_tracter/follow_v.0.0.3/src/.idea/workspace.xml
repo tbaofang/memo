@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="false">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a367bd32-8caa-401b-8557-891d6c460eb2" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="src" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="local.mapping.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/src/local_mapping/local.mapping.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="data.preprocess.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/src/data.preprocess.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="local.mapping.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/include/local.mapping.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="make_training_data.launch" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/launch/make_training_data.launch">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="make.training.data.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/src/make_training_data/make.training.data.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="make.training.data.node.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/src/make_training_data/make.training.data.node.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="leg_detect.launch" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/launch/leg_detect.launch">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="leg.detect.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/src/leg_detect/leg.detect.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" column="79" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="79" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="local.mapping.node.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/follow/src/local_mapping/local.mapping.node.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="detected_cluster.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/follow/scripts/detected_cluster.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="31" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>add_message_files</find>
+      <find>trainingDataMat</find>
+      <find>DataPreprocess</find>
+      <find>setRegressionAccuracy</find>
+      <find>initial_pos_data_size</find>
+      <find>cluster_position</find>
+      <find>forest_</find>
+      <find>save_fileeee</find>
+      <find>5</find>
+      <find>train_pos_data_</find>
+      <find>min_angle_</find>
+      <find>in_free_space</find>
+      <find>scan_topic_</find>
+      <find>non_leg_clusters</find>
+      <find>grid_centre_pos_x_</find>
+      <find>width</find>
+      <find>resolution</find>
+      <find>dist</find>
+      <find>closest_beam_angle</find>
+      <find>angle</find>
+      <find>ALPHA</find>
+      <find>closest_beam_idx</find>
+      <find>reliable_inf_range_</find>
+      <find>UNKNOWN</find>
+      <find>OBSTACLE</find>
+      <find>FREE_SPACE</find>
+      <find>invalid_measurements_are_free_space_</find>
+      <find>l_</find>
+      <find>resolution_</find>
+      <find>map_pub_</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/follow/src/leg_detect/leg.detect.node.cpp" />
+        <option value="$PROJECT_DIR$/../../src/follow/src/data.preprocess.cpp" />
+        <option value="$PROJECT_DIR$/../../src/follow/include/data.preprocess.h" />
+        <option value="$PROJECT_DIR$/../../src/follow/include/leg.detect.h" />
+        <option value="$PROJECT_DIR$/../../src/follow/test/svm.cpp" />
+        <option value="$PROJECT_DIR$/follow/test/svm.cpp" />
+        <option value="$PROJECT_DIR$/follow/include/data.preprocess.h" />
+        <option value="$PROJECT_DIR$/follow/src/data.preprocess.cpp" />
+        <option value="$PROJECT_DIR$/follow/include/leg.detect.h" />
+        <option value="$PROJECT_DIR$/follow/launch/leg.detect.launch" />
+        <option value="$PROJECT_DIR$/follow/src/train/train.node.cpp" />
+        <option value="$PROJECT_DIR$/follow/include/train.h" />
+        <option value="$PROJECT_DIR$/follow/src/leg_detect/leg.detect.cpp" />
+        <option value="$PROJECT_DIR$/follow/src/make.training.data/make.training.data.cpp" />
+        <option value="$PROJECT_DIR$/follow/src/make.training.data/make.training.data.node.cpp" />
+        <option value="$PROJECT_DIR$/follow/src/make_training_data/make.training.data.node.cpp" />
+        <option value="$PROJECT_DIR$/follow/include/make.training.data.h" />
+        <option value="$PROJECT_DIR$/follow/src/train/train.cpp" />
+        <option value="$PROJECT_DIR$/follow/src/make_training_data/make.training.data.cpp" />
+        <option value="$PROJECT_DIR$/follow/launch/make_training_data.launch" />
+        <option value="$PROJECT_DIR$/follow/launch/train.launch" />
+        <option value="$PROJECT_DIR$/follow/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/follow/src/local_mapping/local.mapping.node.cpp" />
+        <option value="$PROJECT_DIR$/../../src/follow/scripts/joint_.py" />
+        <option value="$PROJECT_DIR$/../../src/follow/src/local_mapping/local.mapping.cpp" />
+        <option value="$PROJECT_DIR$/../../src/follow/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/../../src/follow/scripts/object_tracter.py" />
+        <option value="$PROJECT_DIR$/../../src/follow/scripts/joint_leg_tracter_node.py" />
+        <option value="$PROJECT_DIR$/../../src/follow/src/leg_detect/leg.detect.cpp" />
+        <option value="$PROJECT_DIR$/../../src/follow/scripts/detected_cluster.py" />
+        <option value="$PROJECT_DIR$/../../src/follow/scripts/kalman_mutil_tracter.py" />
+        <option value="$PROJECT_DIR$/follow/scripts/kalman_mutil_tracter.py" />
+        <option value="$PROJECT_DIR$/follow/launch/local_mapping.launch" />
+        <option value="$PROJECT_DIR$/follow/src/local_mapping/local.mapping.cpp" />
+        <option value="$PROJECT_DIR$/follow/include/local.mapping.h" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="830" />
+    <option name="y" value="32" />
+    <option name="width" value="676" />
+    <option name="height" value="864" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+              <item name="launch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="leg_detect" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="src" type="b2602c69:ProjectViewProjectNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="local_mapping" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a367bd32-8caa-401b-8557-891d6c460eb2" name="Default" comment="" />
+      <created>1546910400866</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1546910400866</updated>
+      <workItem from="1546910402297" duration="1213000" />
+      <workItem from="1546911626367" duration="753000" />
+      <workItem from="1546912384931" duration="9476000" />
+      <workItem from="1546928883630" duration="17261000" />
+      <workItem from="1546997239688" duration="13244000" />
+      <workItem from="1547019446849" duration="81000" />
+      <workItem from="1547019638872" duration="10392000" />
+      <workItem from="1547082347069" duration="18526000" />
+      <workItem from="1547168067155" duration="10107000" />
+      <workItem from="1547258377726" duration="13392000" />
+      <workItem from="1547358439381" duration="5474000" />
+      <workItem from="1547429131720" duration="4521000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="104440000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="46" y="-11" width="1555" height="912" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.91" visible="true" weight="0.21671018" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.33075932" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" sideWeight="0.09" side_tool="true" weight="0.24983902" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.91" visible="true" weight="0.2532637" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="CMake" order="10" weight="0.33075932" />
+      <window_info id="Favorites" order="2" sideWeight="0.09" side_tool="true" weight="0.24983902" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../src/follow/CMakeLists.txt" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/leg.detect.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/data.preprocess.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/leg.detect.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/leg_detect/leg.detect.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/leg_detect/leg.detect.node.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/data.preprocess.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/data.preprocess.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/leg.detect.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/CMakeLists.txt" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/test/svm.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/test/svm.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/leg.detect.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/config/trained_leg_detector_res=0.33.yaml" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/package.xml" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/config/training_0108.yaml" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/train.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/data.preprocess.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/leg_detect/leg.detect.node.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/train/train.node.cpp" />
+    <entry file="file://$PROJECT_DIR$/follow/src/make.training.data/make.training.data.node.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/make_training_data/make.training.data.node.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/data.preprocess.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/make.training.data.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/make_training_data.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/leg_detect.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/train.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/launch/local_mapping.launch" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/make_training_data/make.training.data.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/train/train.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/local_mapping/local.mapping.node.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/include/local.mapping.h" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/local_mapping/local.mapping.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/CMakeLists.txt" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/scripts/object_tracter.py" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/scripts/joint_leg_tracter_node.py" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/src/leg_detect/leg.detect.cpp" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/scripts/detected_cluster.py" />
+    <entry file="file://$PROJECT_DIR$/../../src/follow/scripts/kalman_mutil_tracter.py" />
+    <entry file="file://$PROJECT_DIR$/follow/scripts/kalman_mutil_tracter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="56" column="55" selection-start-line="56" selection-start-column="55" selection-end-line="56" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/launch/local_mapping.launch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/data.preprocess.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/scripts/detected_cluster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="31" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/include/local.mapping.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/local_mapping/local.mapping.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/launch/make_training_data.launch">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/make_training_data/make.training.data.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/make_training_data/make.training.data.node.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/launch/leg_detect.launch">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/leg_detect/leg.detect.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="79" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/follow/src/local_mapping/local.mapping.node.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+</project>

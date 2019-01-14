@@ -1,0 +1,8 @@
+prefix=/home/tbf/proj/follow/install
+
+Name: follow
+Description: Description of follow
+Version: 0.0.0
+Cflags: -I/home/tbf/proj/follow/install/include
+Libs: -L/home/tbf/proj/follow/install/lib 
+Requires: 

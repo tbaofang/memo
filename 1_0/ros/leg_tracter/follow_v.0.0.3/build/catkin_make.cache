@@ -1,0 +1,2 @@
+follow
+-DCATKIN_DEVEL_PREFIX=/home/tbf/proj/follow/devel -DCMAKE_INSTALL_PREFIX=/home/tbf/proj/follow/install -G Unix Makefiles

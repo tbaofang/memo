@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="follow" type="leg_detect_node" name="leg_detect_node" output="screen" >
+        <!--<param name="forest_file" value="$(find follow)/config/trained_leg_detector_res=0.33.yaml"/>-->
+        <param name="forest_file" value="$(find follow)/config/training_0108.yaml"/>
+    </node>
+
+</launch>

@@ -1,0 +1,71 @@
+<launch>
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_1.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_1_extracted.bag" />
+        <param name="scan_topic" value="right_scan" />
+        <param name="laser_frame" value="right_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node2" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_2.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_2_extracted.bag" />
+        <param name="scan_topic" value="right_scan" />
+        <param name="laser_frame" value="right_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node3" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_3.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_3_extracted.bag" />
+        <param name="scan_topic" value="right_scan" />
+        <param name="laser_frame" value="right_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node4" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_4.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_4_extracted.bag" />
+        <param name="scan_topic" value="right_scan" />
+        <param name="laser_frame" value="right_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node5" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_5.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_5_extracted.bag" />
+        <param name="scan_topic" value="right_scan" />
+        <param name="laser_frame" value="right_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node6" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_6.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_6_extracted.bag" />
+        <param name="scan_topic" value="rear_scan" />
+        <param name="laser_frame" value="rear_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+
+    <node pkg="follow" type="make_training_data_node" name="make_training_data_node7" output="screen" >
+        <param name="load_bag_file" value="$(find follow)/rosbags/training_scans_res=0.33/positive_not_extracted/positive_7.bag" />
+        <param name="save_bag_file" value="$(find follow)/rosbags2/training_scans_res=0.33/positive_7_extracted.bag" />
+        <param name="scan_topic" value="rear_scan" />
+        <param name="laser_frame" value="rear_laser" />
+        <param name="min_angle" value="-15" />
+        <param name="max_angle" value="15" />
+        <param name="max_dist" value="5" />
+    </node>
+</launch>
