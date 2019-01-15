@@ -1,8 +1,0 @@
-prefix=/home/tbf/proj/follow/devel
-
-Name: follow
-Description: Description of follow
-Version: 0.0.0
-Cflags: -I/home/tbf/proj/follow/devel/include
-Libs: -L/home/tbf/proj/follow/devel/lib 
-Requires: 
